@@ -315,7 +315,7 @@ class MyCalculator extends React.Component {
       history: [...this.state.history, [input, output]],
       input: output,
     });
-
+    document.getElementById("inputArea").innerText = output;
     setTimeout(() => {
       let history = document.getElementById("history");
       history.scrollTop = history.scrollHeight;
