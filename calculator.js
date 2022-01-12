@@ -7,32 +7,32 @@ class MyCalculator extends React.Component {
       history: []
     };
   }
-  
+
   numberPrefixes = ["√"];
   numberSuffixes = ["%", "!"]
 
   isNumeric(x) {
     return (x >= "0" && x <= "9") || x == "." || x == "e";
   }
-  
+
   mathFunctions = {
-    "Rad" : (number) => (number * (Math.PI/180)),
-    "Deg" : (number) => (number * (180/Math.PI)),
-    "sin" : Math.sin,
-    "cos" : Math.cos,
-    "tan" : Math.tan,
-    "ln" : Math.log,
-    "log" : Math.log10,
+    "Rad": (number) => (number * (Math.PI / 180)),
+    "Deg": (number) => (number * (180 / Math.PI)),
+    "sin": Math.sin,
+    "cos": Math.cos,
+    "tan": Math.tan,
+    "ln": Math.log,
+    "log": Math.log10,
   }
-    
+
   symbolFunctions = {
-    "%" :  (number) => {
-          return Number(number.replace("%", "")) * 0.01;
+    "%": (number) => {
+      return Number(number.replace("%", "")) * 0.01;
     },
-    "√" :  (number) => {
-          return Math.sqrt(Number(number.replace("√", "")));
+    "√": (number) => {
+      return Math.sqrt(Number(number.replace("√", "")));
     },
-    "!" :  (number) => {
+    "!": (number) => {
       let integer = Number(number.replace("!", ""));
       let factorial = 0;
       if (integer > 0) {
@@ -50,7 +50,7 @@ class MyCalculator extends React.Component {
         }
         return factorial;
       }
-      
+
       return 0;
     },
   }
@@ -58,7 +58,7 @@ class MyCalculator extends React.Component {
   // In order of operations
   operatorFunctions = {
     "^": (a, b) => {
-      return (a < 0) ? -(a**b) : (a**b);
+      return (a < 0) ? -(a ** b) : (a ** b);
     },
     "×": (a, b) => {
       return parseFloat(a) * parseFloat(b);
@@ -73,8 +73,8 @@ class MyCalculator extends React.Component {
       return parseFloat(a) - parseFloat(b);
     }
   };
-  
-  
+
+
 
   mathOperators = [
     [this.operatorFunctions["^"]],
@@ -129,14 +129,15 @@ class MyCalculator extends React.Component {
       let currentNumber = this.getLastNumber(input, i);
 
       if (currentChar == "." && lastChar == ".") continue;
-      
+
       if ((currentChar == ".") && !this.isNumeric(lastChar)) {
-          formatted += "0" + currentChar;
-          continue;
+        formatted += "0" + currentChar;
+        continue;
       }
-      
+
       if (
-        currentChar == "0" &&
+        (!this.isNumeric(lastChar)) &&
+        (currentChar == "0") &&
         (nextChar != ".")
       )
         continue;
@@ -156,15 +157,15 @@ class MyCalculator extends React.Component {
       if (currentChar == "e") {
         if (currentNumber.includes(".") && lastChar != ".")
           continue
-        
+
         if (lastChar != ".") formatted += ".";
       }
-      
-      
+
+
       if (lastChar == "√" && (!this.isNumeric(currentChar) && currentChar != "(")) continue;
-      
+
       if (currentChar == "%" && (!this.isNumeric(lastChar) && currentChar != "(")) continue;
-      
+
       if (currentChar == "(" && nextChar == ")") {
         i++;
         continue;
@@ -173,7 +174,7 @@ class MyCalculator extends React.Component {
       if (currentChar == "π" && this.isNumeric(nextChar)) {
         currentChar = "×" + currentChar;
       }
-      
+
       if ((nextChar == "(" || nextChar == "π") && this.isNumeric(currentChar)) {
         currentChar = currentChar + "×";
       }
@@ -222,7 +223,7 @@ class MyCalculator extends React.Component {
         number = "-";
         i++;
       }
-      
+
       if (this.isNumeric(input[i]) || input[i] == "√") {
         while ((input[i] != undefined) && (this.isNumeric(input[i]) || (input[i] in this.symbolFunctions))) {
           number += input[i];
@@ -233,7 +234,7 @@ class MyCalculator extends React.Component {
         if (((input[i] in this.symbolFunctions) || (number[0] in this.symbolFunctions))) {
           number = this.symbolFunctions[input[i]](number);
         }
-        
+
         output.push(number);
         continue;
       }
@@ -246,24 +247,24 @@ class MyCalculator extends React.Component {
         output.push(this.operatorFunctions[input[i]]);
         continue;
       }
-      
+
       if (input[i] != "e" && (input[i].toLowerCase() >= "a" && input[i].toLowerCase() <= "z")) {
         let functionName = "";
         for (; input[i] != "("; i++) {
           functionName += input[i];
         }
-        
+
         let innerExpression = "";
         let levels = 1;
         i++;
         for (; levels > 0; i++) {
           if (input[i] == "(") levels++;
           else if (input[i] == ")") levels--;
-          
+
           if (levels > 0)
             innerExpression += input[i];
         }
-        
+
         let parsedInner = this.parseMathStatement(innerExpression);
         let evaluatedInner = this.evaluateStatement(parsedInner);
         output.push(this.mathFunctions[functionName](evaluatedInner));
@@ -290,7 +291,7 @@ class MyCalculator extends React.Component {
         i = parenthEnd;
         continue;
       }
-      
+
       if (input[i] == "π") {
         output.push(Math.PI);
       }
@@ -319,7 +320,7 @@ class MyCalculator extends React.Component {
       let history = document.getElementById("history");
       history.scrollTop = history.scrollHeight;
     }, 1);
-    
+
     return output;
   };
 
@@ -382,10 +383,10 @@ class MyCalculator extends React.Component {
 
     return (
       <div>
-        <div class="gridContainer" id="calcGridContainer">
+        <div className="gridContainer" id="calcGridContainer">
           <div id="history">
             {this.state.history.map((x) => (
-              <div>
+              <div key={x[0]}>
                 {x[0]} = {x[1]}
               </div>
             ))}
@@ -396,7 +397,8 @@ class MyCalculator extends React.Component {
           >
             <span type="text"
               id="inputArea"
-              contenteditable="true"
+              contentEditable="true"
+              suppressContentEditableWarning="true"
               onKeyUp={(e) => {
                 e.preventDefault();
                 var sel = window.getSelection();
@@ -413,7 +415,7 @@ class MyCalculator extends React.Component {
                   this.setState({
                     input: text,
                   });
-                  
+
                   e.target.innerText = this.evaluateInput();
                   range.setStart(e.target.firstChild, e.target.innerText.length);
                   return;
@@ -478,12 +480,12 @@ class ButtonSection extends React.Component {
 class TopButtons extends ButtonSection {
   render() {
     return (
-      <div class="gridContainer" id="topButtonGridContainer">
+      <div className="gridContainer" id="topButtonGridContainer">
         <button onClick={this.inputHandler("Rad(")}>Rad</button>
         <button onClick={this.inputHandler("Deg(")}>Deg</button>
         <button onClick={this.inputHandler("!")}>x!</button>
         {["(", ")", "%"].map((x) => (
-          <button class="numberButton" onClick={this.inputHandler(x)}>
+          <button className="numberButton" key={x} onClick={this.inputHandler(x)}>
             {x}
           </button>
         ))}
@@ -498,7 +500,7 @@ class TopButtons extends ButtonSection {
 class LeftButtons extends ButtonSection {
   render() {
     return (
-      <div class="gridContainer" id="leftButtonGridContainer">
+      <div className="gridContainer" id="leftButtonGridContainer">
         <button>Inv</button>
         <button onClick={this.inputHandler("sin(")}>sin</button>
         <button onClick={this.inputHandler("ln(")}>ln</button>
@@ -524,9 +526,9 @@ class LeftButtons extends ButtonSection {
 class NumberButtons extends ButtonSection {
   render() {
     return (
-      <div class="gridContainer" id="numberButtonGridContainer">
+      <div className="gridContainer" id="numberButtonGridContainer">
         {[7, 8, 9, 4, 5, 6, 1, 2, 3, 0, "."].map((x) => (
-          <button class="numberButton" onClick={this.inputHandler(x)}>
+          <button className="numberButton" key={x} onClick={this.inputHandler(x)}>
             {x}
           </button>
         ))}
@@ -539,7 +541,7 @@ class NumberButtons extends ButtonSection {
 class RightButtons extends ButtonSection {
   render() {
     return (
-      <div class="gridContainer" id="rightButtonGridContainer">
+      <div className="gridContainer" id="rightButtonGridContainer">
         <button onClick={this.inputHandler("÷")}>÷</button>
         <button onClick={this.inputHandler("×")}>×</button>
         <button onClick={this.inputHandler("-")}>-</button>
@@ -548,5 +550,3 @@ class RightButtons extends ButtonSection {
     );
   }
 }
-
-//ReactDOM.render(<MyCalculator />, document.getElementById("root"));
