@@ -2,13 +2,13 @@ class Calculator extends React.Component {
     #parser = null;
 
     constructor(props) {
-        this.#parser = props.parser;
         super(props);
         this.state = {
             parsedInput: [],
             input: "0",
             history: []
         };
+        this.#parser = props.parser;
     }
 
     numberPrefixes = ["√"];
