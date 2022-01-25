@@ -1,5 +1,3 @@
-import MathFunction from "./MathFunction.js"
-
 export class ExpressionParser {
     #parsedExpression = null;
     #isNumeric = null;
