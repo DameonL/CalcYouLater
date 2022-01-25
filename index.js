@@ -1,4 +1,4 @@
-import { ExpressionEvaluator } from "./Expressions/ExpressionEvaluator";
+import ExpressionEvaluator from "./Expressions/ExpressionEvaluator";
 import { ExpressionFormatter } from "./Expressions/ExpressionFormatter";
 import { ExpressionParser } from "./Expressions/ExpressionParser";
 import { Calculator } from "./Calculator";
