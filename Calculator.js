@@ -1,4 +1,5 @@
-import { ButtonSection } from "./ButtonSection";
+import React from "react";
+import ButtonSection from "./ButtonSection";
 
 export default class Calculator extends React.Component {
     #parser = null;
