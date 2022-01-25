@@ -1,6 +1,75 @@
 class ExpressionParser {
     #parsedExpression = null;
 
+    #isNumeric(x) {
+        return (x >= "0" && x <= "9") || x == "." || x == "e";
+    }
+
+    mathFunctions = {
+        "Rad": (number) => (number * (Math.PI / 180)),
+        "Deg": (number) => (number * (180 / Math.PI)),
+        "sin": Math.sin,
+        "cos": Math.cos,
+        "tan": Math.tan,
+        "ln": Math.log,
+        "log": Math.log10,
+    }
+
+    symbolFunctions = {
+        "%": (number) => {
+            return Number(number.replace("%", "")) * 0.01;
+        },
+        "√": (number) => {
+            return Math.sqrt(Number(number.replace("√", "")));
+        },
+        "!": (number) => {
+            let integer = Number(number.replace("!", ""));
+            let factorial = 0;
+            if (integer > 0) {
+                factorial = 1;
+                for (let i = 2; i <= integer; i++) {
+                    factorial = factorial * i;
+                }
+                return factorial;
+            }
+
+            else if (integer < 0) {
+                factorial = -1;
+                for (let i = -2; i >= integer; i--) {
+                    factorial = factorial * i;
+                }
+                return factorial;
+            }
+
+            return 0;
+        },
+    }
+
+    // In order of operations
+    operatorFunctions = {
+        "^": (a, b) => {
+            return (a < 0) ? -(a ** b) : (a ** b);
+        },
+        "×": (a, b) => {
+            return parseFloat(a) * parseFloat(b);
+        },
+        "÷": (a, b) => {
+            return parseFloat(a) / parseFloat(b);
+        },
+        "+": (a, b) => {
+            return parseFloat(a) + parseFloat(b);
+        },
+        "-": (a, b) => {
+            return parseFloat(a) - parseFloat(b);
+        }
+    };
+
+    mathOperators = [
+        [this.operatorFunctions["^"]],
+        [this.operatorFunctions["×"], this.operatorFunctions["÷"]],
+        [this.operatorFunctions["+"], this.operatorFunctions["-"]]
+    ];
+    
     ParseMathStatement = (input) => {
         let output = [];
         let lastChar = "";
@@ -51,9 +120,9 @@ class ExpressionParser {
                         innerExpression += input[i];
                 }
 
-                let parsedInner = this.parseMathStatement(innerExpression);
-                let evaluatedInner = this.evaluateStatement(parsedInner);
-                output.push(this.mathFunctions[functionName](evaluatedInner));
+                let parsedInner = ParseMathStatement(innerExpression);
+//                let evaluatedInner = this.evaluateStatement(parsedInner);
+                output.push({ function: this.mathFunctions[functionName], parsed: parsedInner });
                 continue;
             }
 
@@ -73,7 +142,7 @@ class ExpressionParser {
                 }
 
                 let parenthStatement = input.substring(i, parenthEnd);
-                output.push(this.parseMathStatement(parenthStatement));
+                output.push(ParseMathStatement(parenthStatement));
                 i = parenthEnd;
                 continue;
             }
