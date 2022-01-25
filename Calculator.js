@@ -7,7 +7,7 @@ class Calculator extends React.Component {
         this.state = {
             parsedInput: [],
             input: "0",
-            history: [0]
+            history: [[0, 0]]
         };
         this.#parser = props.parser;
         this.#formatter = props.formatter;

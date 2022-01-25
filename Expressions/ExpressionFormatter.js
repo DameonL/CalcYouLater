@@ -37,7 +37,7 @@ class ExpressionFormatter {
                 continue;
     
             if (
-                this.#operators.contains(currentChar) &&
+                this.#operators.includes(currentChar) &&
                 currentChar != "-" &&
                 !this.#isNumeric(lastChar) &&
                 lastChar != "" &&
