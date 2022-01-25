@@ -1,3 +1,5 @@
+import MathFunction from "./MathFunction"
+
 export class ExpressionParser {
     #parsedExpression = null;
     #isNumeric = null;
