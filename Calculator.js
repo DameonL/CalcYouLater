@@ -80,7 +80,7 @@ class Calculator extends React.Component {
         var range = sel.getRangeAt(0);
         let selStart = range.startOffset;
         let selEnd = range.endOffset;
-        e.target.innerHTML = event.target.innerHTML.replace("<br>", "");
+        event.target.innerHTML = event.target.innerHTML.replace("<br>", "");
         let text = event.target.innerText;
         text = text.replace("Ans", this.state.history[this.state.history.length - 1][1]);
 
