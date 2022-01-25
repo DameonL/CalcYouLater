@@ -1,4 +1,5 @@
 import ReactDOM from "react-dom";
+import React from "react";
 import ExpressionEvaluator from "./Expressions/ExpressionEvaluator";
 import ExpressionFormatter from "./Expressions/ExpressionFormatter";
 import ExpressionParser from "./Expressions/ExpressionParser";
