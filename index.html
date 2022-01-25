@@ -26,8 +26,7 @@
     <div id="root">
         <div>
             <script type="text/babel">
-                let calculator = new Calculator(new ExpressionParser());
-                ReactDOM.render(calculator, document.getElementById("root"));
+                ReactDOM.render(<Calculator parser={new ExpressionParser()} />, document.getElementById("root"));
             </script>
         </div>
     </div>

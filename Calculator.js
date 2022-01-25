@@ -1,8 +1,8 @@
 class Calculator extends React.Component {
     #parser = null;
 
-    constructor(props, parser) {
-        this.#parser = parser;
+    constructor(props) {
+        this.#parser = props.parser;
         super(props);
         this.state = {
             parsedInput: [],
