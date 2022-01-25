@@ -8,7 +8,8 @@ class Calculator extends React.Component {
         this.state = {
             parsedInput: [],
             input: "0",
-            history: [[0, 0]]
+            history: [[0, 0]],
+            inverse: false,
         };
         this.#parser = props.parser;
         this.#formatter = props.formatter;
@@ -162,7 +163,7 @@ class Calculator extends React.Component {
 
                     <ButtonSection buttons={
                         <div className="gridContainer" id="leftButtonGridContainer">
-                            <button>Inv</button>
+                            <button onClick={() => this.setState({ inverse: this.state.inverse != true})}>Inv</button>
                             <button onClick={() => this.#updateInput("sin(")}>sin</button>
                             <button onClick={() => this.#updateInput("ln(")}>ln</button>
 
@@ -174,7 +175,7 @@ class Calculator extends React.Component {
                             <button onClick={() => this.#updateInput("tan(")}>tan</button>
                             <button onClick={() => this.#updateInput("√")}>√</button>
 
-                            <button onClick={() => this.#updateInput("Ans")}>Ans</button>
+                            (!this.state.inverse) ? <button onClick={() => this.#updateInput("Ans")}>Ans</button> : <button onClick={() => this.#updateInput("Rnd")}>Rnd</button>;
                             <button onClick={() => this.#updateInput("e")}>EXP</button>
                             <button onClick={() => this.#updateInput("^")}>
                                 X<sup>y</sup>
