@@ -22,7 +22,7 @@ class ExpressionEvaluator {
                     operation: statement[i]
                 });
             } else if (statement[i] instanceof MathFunction) {
-                MathFunction.innerExpression = this.Evaluate(MathFunction.innerExpression);
+                statement[i].innerExpression = this.Evaluate(statement[i].innerExpression);
                 statement[i] = MathFunction.Evaluate();
             }
         }
