@@ -172,21 +172,21 @@ class Calculator extends React.Component {
                             <button>Inv</button>
                             <button onClick={this.inputHandler("sin(")}>sin</button>
                             <button onClick={this.inputHandler("ln(")}>ln</button>
-            
+
                             <button onClick={this.inputHandler("π")}>π</button>
                             <button onClick={this.inputHandler("cos(")}>cos</button>
                             <button onClick={this.inputHandler("log(")}>log</button>
-            
+
                             <button>e</button>
                             <button onClick={this.inputHandler("tan(")}>tan</button>
                             <button onClick={this.inputHandler("√")}>√</button>
-            
+
                             <button onClick={this.inputHandler("Ans")}>Ans</button>
                             <button onClick={this.inputHandler("e")}>EXP</button>
                             <button onClick={this.inputHandler("^")}>
                                 X<sup>y</sup>
                             </button>
-                            </div>
+                        </div>
                     } />
 
                     <ButtonSection inputHandler={(event) => this.inputHandler(event)} buttons={
@@ -197,7 +197,7 @@ class Calculator extends React.Component {
                                 </button>
                             ))}
                             <button onClick={this.props.equalsHandler}>=</button>
-                            </div>
+                        </div>
                     } />
 
                     <ButtonSection inputHandler={(event) => this.inputHandler(event)} buttons={
