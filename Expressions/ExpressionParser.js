@@ -142,7 +142,7 @@ class ExpressionParser {
                 }
 
                 let parenthStatement = input.substring(i, parenthEnd);
-                output.push(() => this.Parse(parenthStatement));
+                output.push(this.Parse(parenthStatement));
                 i = parenthEnd;
                 continue;
             }
