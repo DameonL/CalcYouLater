@@ -70,7 +70,7 @@ class ExpressionParser {
         [this.#operatorFunctions["+"], this.#operatorFunctions["-"]]
     ];
 
-    Parse = (input) => {
+    Parse(input) {
         let output = [];
         let lastChar = "";
 
