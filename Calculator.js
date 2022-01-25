@@ -183,7 +183,7 @@ class Calculator extends React.Component {
                                     }
                                 }
 
-                                let formatted = this.#formatter.formatInput(text);
+                                let formatted = this.#formatter.Format(text);
                                 let difference = text.length - formatted.length;
                                 this.setState({ input: formatted });
                                 e.target.innerText = formatted;
