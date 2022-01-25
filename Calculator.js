@@ -49,7 +49,7 @@ class Calculator extends React.Component {
     };
 
     parseInput = () => {
-        let parsed = this.#parser.ParseMathStatement(input);
+        let parsed = this.#parser.Parse(input);
         return parsed;
     };
 
@@ -62,7 +62,7 @@ class Calculator extends React.Component {
             closedCount++;
         }
 
-        let output = this.evaluateStatement(this.#parser.ParseMathStatement(input));
+        let output = this.evaluateStatement(this.#parser.Parse(input));
         output = output.toString();
         this.setState({
             history: [...this.state.history, [input, output]],
