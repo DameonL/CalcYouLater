@@ -150,7 +150,7 @@ class Calculator extends React.Component {
                             <button onClick={() => this.#updateInput("Deg(")}>Deg</button>
                             <button onClick={() => this.#updateInput("!")}>x!</button>
                             {["(", ")", "%"].map((x) => (
-                                <button className="numberButton" key={x} onClick={this.#updateInput(x)}>
+                                <button className="numberButton" key={x} onClick={() => this.#updateInput(x)}>
                                     {x}
                                 </button>
                             ))}
