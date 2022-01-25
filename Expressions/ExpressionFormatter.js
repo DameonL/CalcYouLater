@@ -1,5 +1,4 @@
 class ExpressionFormatter {
-
     #GetLastNumber = (input, startPosition) => {
         let lastNumber = "";
         for (let i = startPosition; i >= 0 && this.isNumeric(input[i]); i--) {
@@ -9,12 +8,6 @@ class ExpressionFormatter {
     };
 
     Format(input) {
-        if (this.state.history.length > 0) {
-            input = input.replace("Ans", this.state.history[this.state.history.length - 1][1]);
-        } else {
-            input = input.replace("Ans", "0");
-        }
-    
         let formatted = "";
         for (let i = 0; i < input.length; i++) {
             let lastChar = input[i - 1];

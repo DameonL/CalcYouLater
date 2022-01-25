@@ -7,7 +7,7 @@ class Calculator extends React.Component {
         this.state = {
             parsedInput: [],
             input: "0",
-            history: []
+            history: [0]
         };
         this.#parser = props.parser;
         this.#formatter = props.formatter;
@@ -160,6 +160,8 @@ class Calculator extends React.Component {
                                 let selEnd = range.endOffset;
                                 e.target.innerHTML = e.target.innerHTML.replace("<br>", "");
                                 let text = e.target.innerText;
+                                text = text.replace("Ans", this.state.history[this.state.history.length - 1][1]);
+
                                 if (text === undefined) {
                                     text = "";
                                 }
