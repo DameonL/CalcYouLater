@@ -164,7 +164,7 @@ class Calculator extends React.Component {
 
                     <ButtonSection buttons={
                         <div className="gridContainer" id="leftButtonGridContainer">
-                            <button onClick={() => this.setState({ inverse: this.state.inverse != true})}>Inv</button>
+                            <button onClick={() => this.setState({ inverse: !this.state.inverse})}>Inv</button>
                             <button onClick={() => this.#updateInput("sin(")}>sin</button>
                             <button onClick={() => this.#updateInput("ln(")}>ln</button>
 
