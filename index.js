@@ -1,8 +1,3 @@
-import { ExpressionEvaluator } from "./Expressions/ExpressionEvaluator.js";
-import { ExpressionFormatter } from "./Expressions/ExpressionFormatter.js";
-import { ExpressionParser } from "./Expressions/ExpressionParser.js";
-import { Calculator } from "./Calculator.js";
-
 let isNumeric = x => {
     return (x >= "0" && x <= "9") || x == "." || x == "e";
 }
