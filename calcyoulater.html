@@ -2,27 +2,35 @@
 
 <head>
 
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-  <title>Calc You Later</title>
+    <title>Calc You Later</title>
 
-  <link rel="stylesheet" href="calculator.css">
-  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <link rel="stylesheet" href="calculator.css">
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
 
-  <!-- Don't use this in production: -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-  <script type="text/babel" src="calculator.js"></script>
+    <script type="text/babel" src="Calculator.js"></script>
+    <script type="text/babel" src="ExpressionEvaluator.js"></script>
+    <script type="text/babel" src="ExpressionFormatter.js"></script>
+    <script type="text/babel" src="ExpressionParser.js"></script>
 
 </head>
 
 <body translate="no">
 
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root">
-    <div>
-      <script type="text/babel">ReactDOM.render(<MyCalculator />, document.getElementById("root"));</script>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+        <div>
+            <script type="text/babel">
+                let calculator = new Calculator(new ExpressionParser());
+                ReactDOM.render(calculator, document.getElementById("root"));
+            </script>
+        </div>
+    </div>
 
 </body>
 
