@@ -1,4 +1,4 @@
-export class MathFunction {
+class MathFunction {
     callback = null;
     innerExpression = null;
 
@@ -11,3 +11,5 @@ export class MathFunction {
         return this.callback(this.innerExpression);
     }
 }
+
+export default MathFunction;
