@@ -14,9 +14,9 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <script type="text/babel" src="Calculator.js"></script>
-    <script type="text/babel" src="ExpressionEvaluator.js"></script>
-    <script type="text/babel" src="ExpressionFormatter.js"></script>
-    <script type="text/babel" src="ExpressionParser.js"></script>
+    <script type="text/babel" src="Expressions/ExpressionEvaluator.js"></script>
+    <script type="text/babel" src="Expressions/ExpressionFormatter.js"></script>
+    <script type="text/babel" src="Expressions/ExpressionParser.js"></script>
 
 </head>
 
@@ -26,7 +26,13 @@
     <div id="root">
         <div>
             <script type="text/babel">
-                ReactDOM.render(<Calculator parser={new ExpressionParser()} />, document.getElementById("root"));
+                let isNumeric = (x) => {
+                    return (x >= "0" && x <= "9") || x == "." || x == "e";
+                }
+
+                let parser = new ExpressionParser(isNumeric);
+                let formatter = new ExpressionFormatter(isNumeric);
+                ReactDOM.render(<Calculator parser={parser} formatter={formatter}/>, document.getElementById("root"));
             </script>
         </div>
     </div>

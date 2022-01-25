@@ -1,5 +1,6 @@
 class Calculator extends React.Component {
     #parser = null;
+    #formatter = null;
 
     constructor(props) {
         super(props);
@@ -9,22 +10,8 @@ class Calculator extends React.Component {
             history: []
         };
         this.#parser = props.parser;
+        this.#formatter = props.formatter;
     }
-
-    numberPrefixes = ["√"];
-    numberSuffixes = ["%", "!"]
-
-    isNumeric(x) {
-        return (x >= "0" && x <= "9") || x == "." || x == "e";
-    }
-
-    getLastNumber = (input, startPosition) => {
-        let lastNumber = "";
-        for (let i = startPosition; i >= 0 && this.isNumeric(input[i]); i--) {
-            lastNumber = input[i] + lastNumber;
-        }
-        return lastNumber;
-    };
 
     countOccurences(char, input = this.state.input) {
         let count = 0;
@@ -50,86 +37,8 @@ class Calculator extends React.Component {
         }
     };
 
-    formatInput = (input) => {
-        if (this.state.history.length > 0) {
-            input = input.replace("Ans", this.state.history[this.state.history.length - 1][1]);
-        } else {
-            input = input.replace("Ans", "0");
-        }
-
-        let formatted = "";
-        for (let i = 0; i < input.length; i++) {
-            let lastChar = input[i - 1];
-            let currentChar = input[i];
-            let nextChar = input[i + 1];
-            let currentNumber = this.getLastNumber(input, i);
-
-            if (currentChar == "." && lastChar == ".") continue;
-
-            if ((currentChar == ".") && !this.isNumeric(lastChar)) {
-                formatted += "0" + currentChar;
-                continue;
-            }
-
-            if (
-                (!this.isNumeric(lastChar)) &&
-                (currentChar == "0") &&
-                (nextChar != ".")
-            )
-                continue;
-
-            if (
-                currentChar in this.operatorFunctions &&
-                currentChar != "-" &&
-                !this.isNumeric(lastChar) &&
-                lastChar != "" &&
-                lastChar != ")"
-            )
-                continue;
-
-            if (currentChar == "*") currentChar = "×";
-            else if (currentChar == "/") currentChar = "÷";
-
-            if (currentChar == "e") {
-                if (currentNumber.includes(".") && lastChar != ".")
-                    continue
-
-                if (lastChar != ".") formatted += ".";
-            }
-
-
-            if (lastChar == "√" && (!this.isNumeric(currentChar) && currentChar != "(")) continue;
-
-            if (currentChar == "%" && (!this.isNumeric(lastChar) && currentChar != "(")) continue;
-
-            if (currentChar == "(" && nextChar == ")") {
-                i++;
-                continue;
-            }
-
-            if (currentChar == "π" && this.isNumeric(nextChar)) {
-                currentChar = "×" + currentChar;
-            }
-
-            if ((nextChar == "(" || nextChar == "π") && this.isNumeric(currentChar)) {
-                currentChar = currentChar + "×";
-            }
-
-            if (
-                lastChar == ")" &&
-                (this.isNumeric(currentChar) || currentChar == "(")
-            ) {
-                currentChar = "×" + currentChar;
-            }
-
-            formatted += currentChar;
-        }
-
-        return formatted;
-    };
-
     updateInput = (input) => {
-        let formatted = this.formatInput(this.state.input + input);
+        let formatted = this.#formatter.Format(this.state.input + input);
         document.getElementById("inputArea").innerText = formatted;
 
         this.setState({
@@ -272,7 +181,7 @@ class Calculator extends React.Component {
                                     }
                                 }
 
-                                let formatted = this.formatInput(text);
+                                let formatted = this.#formatter.formatInput(text);
                                 let difference = text.length - formatted.length;
                                 this.setState({ input: formatted });
                                 e.target.innerText = formatted;

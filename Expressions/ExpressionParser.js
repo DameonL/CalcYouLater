@@ -1,11 +1,12 @@
 class ExpressionParser {
     #parsedExpression = null;
+    #isNumeric = null;
 
-    #isNumeric(x) {
-        return (x >= "0" && x <= "9") || x == "." || x == "e";
+    constructor(numericFunction) {
+        this.#isNumeric = numericFunction;
     }
 
-    mathFunctions = {
+    #mathFunctions = {
         "Rad": (number) => (number * (Math.PI / 180)),
         "Deg": (number) => (number * (180 / Math.PI)),
         "sin": Math.sin,
@@ -15,7 +16,7 @@ class ExpressionParser {
         "log": Math.log10,
     }
 
-    symbolFunctions = {
+    #symbolFunctions = {
         "%": (number) => {
             return Number(number.replace("%", "")) * 0.01;
         },
@@ -45,8 +46,7 @@ class ExpressionParser {
         },
     }
 
-    // In order of operations
-    operatorFunctions = {
+    #operatorFunctions = {
         "^": (a, b) => {
             return (a < 0) ? -(a ** b) : (a ** b);
         },
@@ -64,13 +64,13 @@ class ExpressionParser {
         }
     };
 
-    mathOperators = [
-        [this.operatorFunctions["^"]],
-        [this.operatorFunctions["×"], this.operatorFunctions["÷"]],
-        [this.operatorFunctions["+"], this.operatorFunctions["-"]]
+    #mathOperators = [
+        [this.#operatorFunctions["^"]],
+        [this.#operatorFunctions["×"], this.#operatorFunctions["÷"]],
+        [this.#operatorFunctions["+"], this.#operatorFunctions["-"]]
     ];
-    
-    ParseMathStatement = (input) => {
+
+    Parse = (input) => {
         let output = [];
         let lastChar = "";
 
@@ -78,28 +78,28 @@ class ExpressionParser {
             if (i > 0) lastChar = input[i - 1];
 
             let number = "";
-            if ((input[i] == "-") && (lastChar == "" || lastChar in this.operatorFunctions)) {
+            if ((input[i] == "-") && (lastChar == "" || lastChar in this.#operatorFunctions)) {
                 number = "-";
                 i++;
             }
 
-            if (this.isNumeric(input[i]) || input[i] == "√") {
-                while ((input[i] != undefined) && (this.isNumeric(input[i]) || (input[i] in this.symbolFunctions))) {
+            if (this.#isNumeric(input[i]) || input[i] == "√") {
+                while ((input[i] != undefined) && (this.#isNumeric(input[i]) || (input[i] in this.#symbolFunctions))) {
                     number += input[i];
                     i++;
                 }
                 i--;
 
-                if (((input[i] in this.symbolFunctions) || (number[0] in this.symbolFunctions))) {
-                    number = this.symbolFunctions[input[i]](number);
+                if (((input[i] in this.#symbolFunctions) || (number[0] in this.#symbolFunctions))) {
+                    number = this.#symbolFunctions[input[i]](number);
                 }
 
                 output.push(number);
                 continue;
             }
 
-            if ((input[i] in this.operatorFunctions) &&!(lastChar in this.operatorFunctions) && (lastChar != "")) {
-                output.push(this.operatorFunctions[input[i]]);
+            if ((input[i] in this.#operatorFunctions) &&!(lastChar in this.#operatorFunctions) && (lastChar != "")) {
+                output.push(this.#operatorFunctions[input[i]]);
                 continue;
             }
 
@@ -120,9 +120,9 @@ class ExpressionParser {
                         innerExpression += input[i];
                 }
 
-                let parsedInner = ParseMathStatement(innerExpression);
+                let parsedInner = Parse(innerExpression);
 //                let evaluatedInner = this.evaluateStatement(parsedInner);
-                output.push({ function: this.mathFunctions[functionName], parsed: parsedInner });
+                output.push({ function: this.#mathFunctions[functionName], parsed: parsedInner });
                 continue;
             }
 
@@ -142,7 +142,7 @@ class ExpressionParser {
                 }
 
                 let parenthStatement = input.substring(i, parenthEnd);
-                output.push(ParseMathStatement(parenthStatement));
+                output.push(Parse(parenthStatement));
                 i = parenthEnd;
                 continue;
             }
