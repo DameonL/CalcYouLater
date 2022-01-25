@@ -17,6 +17,7 @@
     <script type="text/babel" src="Expressions/ExpressionEvaluator.js"></script>
     <script type="text/babel" src="Expressions/ExpressionFormatter.js"></script>
     <script type="text/babel" src="Expressions/ExpressionParser.js"></script>
+    <script type="text/babel" src="Expressions/MathFunction.js"></script>
 
 </head>
 
@@ -34,7 +35,8 @@
 
                 let parser = new ExpressionParser(isNumeric);
                 let formatter = new ExpressionFormatter(isNumeric, operators);
-                ReactDOM.render(<Calculator parser={parser} formatter={formatter}/>, document.getElementById("root"));
+                let evaluator = new ExpressionEvaluator(parser.MathOperators);
+                ReactDOM.render(<Calculator parser={parser} formatter={formatter} evaluator={evaluator} />, document.getElementById("root"));
             </script>
         </div>
     </div>

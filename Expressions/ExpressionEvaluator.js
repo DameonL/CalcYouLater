@@ -1,12 +1,18 @@
 class ExpressionEvaluator {
-    evaluateStatement = (statement) => {
+    #operators = [];
+
+    constructor(operators) {
+        this.#operators = operators;
+    }
+
+    Evaluate(statement) {
         // First we need to process parentheses recursively
         for (let i = 0; i < statement.length; i++) {
             if (Array.isArray(statement[i])) {
                 statement[i] = this.evaluateStatement(statement[i]);
             }
         }
-    
+
         // Get all the operator indices
         let operators = [];
         for (let i = 0; i < statement.length; i++) {
@@ -15,18 +21,21 @@ class ExpressionEvaluator {
                     index: i,
                     operation: statement[i]
                 });
+            } else if (statement[i] instanceof MathFunction) {
+                MathFunction.innerExpression = this.EvaluateStatement(MathFunction.innerExpression);
+                statement[i] = MathFunction.Evaluate();
             }
         }
-    
+
         operators.sort((a, b) => {
             let getPriority = (item) => {
-                for (let i = 0; i < this.mathOperators.length; i++) {
-                    if (this.mathOperators[i].includes(item.operation)) {
+                for (let i = 0; i < this.#operators.length; i++) {
+                    if (this.#operators[i].includes(item.operation)) {
                         return i;
                     }
                 }
             };
-    
+
             let aPriority = getPriority(a);
             let bPriority = getPriority(b);
             if (aPriority < bPriority) {
@@ -37,7 +46,7 @@ class ExpressionEvaluator {
                 return a.index < b.index ? -1 : 1;
             }
         });
-    
+
         let output = 0;
         for (let i = 0; i < operators.length; i++) {
             let index = statement.indexOf(operators[i].operation);
@@ -48,7 +57,7 @@ class ExpressionEvaluator {
             output = operators[i].operation(left, right);
             statement.splice(leftStart, 3, output);
         }
-    
+
         return statement;
-    }
+    };
 }

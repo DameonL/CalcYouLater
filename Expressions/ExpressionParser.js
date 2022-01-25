@@ -70,6 +70,10 @@ class ExpressionParser {
         [this.#operatorFunctions["+"], this.#operatorFunctions["-"]]
     ];
 
+    get MathOperators() {
+        return [...this.#mathOperators];
+    }
+
     Parse(input) {
         let output = [];
         let lastChar = "";
@@ -120,9 +124,9 @@ class ExpressionParser {
                         innerExpression += input[i];
                 }
 
-                let parsedInner = Parse(innerExpression);
+                let parsedInner = this.Parse(innerExpression);
 //                let evaluatedInner = this.evaluateStatement(parsedInner);
-                output.push({ function: this.#mathFunctions[functionName], parsed: parsedInner });
+                output.push(new MathFunction(this.#mathFunctions[functionName], parsedInner));
                 continue;
             }
 
