@@ -1,4 +1,4 @@
-export default class ExpressionEvaluator {
+class ExpressionEvaluator {
     #operators = [];
 
     constructor(operators) {

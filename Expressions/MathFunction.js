@@ -1,4 +1,4 @@
-export default class MathFunction {
+class MathFunction {
     callback = null;
     innerExpression = null;
 

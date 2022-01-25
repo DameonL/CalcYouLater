@@ -1,7 +1,4 @@
-import React from "react";
-import ButtonSection from "./ButtonSection";
-
-export default class Calculator extends React.Component {
+class Calculator extends React.Component {
     #parser = null;
     #formatter = null;
     #evaluator = null;

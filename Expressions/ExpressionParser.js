@@ -1,6 +1,4 @@
-import MathFunction from "./MathFunction"
-
-export default class ExpressionParser {
+class ExpressionParser {
     #parsedExpression = null;
     #isNumeric = null;
 
