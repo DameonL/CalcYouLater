@@ -112,7 +112,7 @@ class Calculator extends React.Component {
         event.target.innerText = formatted;
 
         if (selStart - difference > 0)
-            range.setStart(e.target.firstChild, selStart - difference);
+            range.setStart(event.target.firstChild, selStart - difference);
     }
 
     render() {
