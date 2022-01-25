@@ -1,7 +1,13 @@
 class ExpressionFormatter {
+    #isNumeric = null;
+
+    constructor(numericFunction) {
+        this.#isNumeric = numericFunction;
+    }
+
     #GetLastNumber = (input, startPosition) => {
         let lastNumber = "";
-        for (let i = startPosition; i >= 0 && this.isNumeric(input[i]); i--) {
+        for (let i = startPosition; i >= 0 && this.#isNumeric(input[i]); i--) {
             lastNumber = input[i] + lastNumber;
         }
         return lastNumber;
@@ -17,13 +23,13 @@ class ExpressionFormatter {
     
             if (currentChar == "." && lastChar == ".") continue;
     
-            if ((currentChar == ".") && !this.isNumeric(lastChar)) {
+            if ((currentChar == ".") && !this.#isNumeric(lastChar)) {
                 formatted += "0" + currentChar;
                 continue;
             }
     
             if (
-                (!this.isNumeric(lastChar)) &&
+                (!this.#isNumeric(lastChar)) &&
                 (currentChar == "0") &&
                 (nextChar != ".")
             )
@@ -32,7 +38,7 @@ class ExpressionFormatter {
             if (
                 currentChar in this.operatorFunctions &&
                 currentChar != "-" &&
-                !this.isNumeric(lastChar) &&
+                !this.#isNumeric(lastChar) &&
                 lastChar != "" &&
                 lastChar != ")"
             )
@@ -49,26 +55,26 @@ class ExpressionFormatter {
             }
     
     
-            if (lastChar == "√" && (!this.isNumeric(currentChar) && currentChar != "(")) continue;
+            if (lastChar == "√" && (!this.#isNumeric(currentChar) && currentChar != "(")) continue;
     
-            if (currentChar == "%" && (!this.isNumeric(lastChar) && currentChar != "(")) continue;
+            if (currentChar == "%" && (!this.#isNumeric(lastChar) && currentChar != "(")) continue;
     
             if (currentChar == "(" && nextChar == ")") {
                 i++;
                 continue;
             }
     
-            if (currentChar == "π" && this.isNumeric(nextChar)) {
+            if (currentChar == "π" && this.#isNumeric(nextChar)) {
                 currentChar = "×" + currentChar;
             }
     
-            if ((nextChar == "(" || nextChar == "π") && this.isNumeric(currentChar)) {
+            if ((nextChar == "(" || nextChar == "π") && this.#isNumeric(currentChar)) {
                 currentChar = currentChar + "×";
             }
     
             if (
                 lastChar == ")" &&
-                (this.isNumeric(currentChar) || currentChar == "(")
+                (this.#isNumeric(currentChar) || currentChar == "(")
             ) {
                 currentChar = "×" + currentChar;
             }
