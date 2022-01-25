@@ -84,6 +84,7 @@ class Calculator extends React.Component {
         event.target.innerHTML = event.target.innerHTML.replace("<br>", "");
         let text = event.target.innerText;
         text = text.replace("Ans", this.state.history[this.state.history.length - 1][1]);
+        text = text.replace("Rnd", Math.random());
 
         if (text === undefined) {
             text = "";
