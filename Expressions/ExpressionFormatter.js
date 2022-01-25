@@ -1,7 +1,8 @@
 class ExpressionFormatter {
     #isNumeric = null;
+    #operators = [];
 
-    constructor(numericFunction) {
+    constructor(numericFunction, operators) {
         this.#isNumeric = numericFunction;
     }
 
@@ -36,7 +37,7 @@ class ExpressionFormatter {
                 continue;
     
             if (
-                currentChar in this.operatorFunctions &&
+                this.#operators.contains(currentChar) &&
                 currentChar != "-" &&
                 !this.#isNumeric(lastChar) &&
                 lastChar != "" &&

@@ -30,8 +30,10 @@
                     return (x >= "0" && x <= "9") || x == "." || x == "e";
                 }
 
+                let operators = ["^","×","÷","+","-"]
+
                 let parser = new ExpressionParser(isNumeric);
-                let formatter = new ExpressionFormatter(isNumeric);
+                let formatter = new ExpressionFormatter(isNumeric, operators);
                 ReactDOM.render(<Calculator parser={parser} formatter={formatter}/>, document.getElementById("root"));
             </script>
         </div>
