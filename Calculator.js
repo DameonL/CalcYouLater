@@ -1,6 +1,6 @@
 import { ButtonSection } from "./ButtonSection";
 
-class Calculator extends React.Component {
+export default class Calculator extends React.Component {
     #parser = null;
     #formatter = null;
     #evaluator = null;
@@ -213,5 +213,3 @@ class Calculator extends React.Component {
         );
     }
 }
-
-export default Calculator;

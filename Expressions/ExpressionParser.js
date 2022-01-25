@@ -1,6 +1,6 @@
 import MathFunction from "./MathFunction"
 
-class ExpressionParser {
+export default class ExpressionParser {
     #parsedExpression = null;
     #isNumeric = null;
 
@@ -161,5 +161,3 @@ class ExpressionParser {
         return output;
     };
 }
-
-export default ExpressionParser;

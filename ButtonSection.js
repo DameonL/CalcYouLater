@@ -1,4 +1,4 @@
-class ButtonSection extends React.Component {
+export default class ButtonSection extends React.Component {
     inputHandler = null;
     buttons = null;
 
@@ -14,5 +14,3 @@ class ButtonSection extends React.Component {
         );
     }
 }
-
-export default ButtonSection;
