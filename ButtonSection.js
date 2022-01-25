@@ -5,8 +5,6 @@ class ButtonSection extends React.Component {
     }
 
     render() {
-        return (
-            <div class="gridcontainer">{this.props.buttons}</div>
-        );
+        return ({this.props.buttons});
     }
 }
