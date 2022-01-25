@@ -1,7 +1,7 @@
 import { ExpressionEvaluator } from "./Expressions/ExpressionParser";
 import { ExpressionFormatter } from "./Expressions/ExpressionParser";
 import { ExpressionParser } from "./Expressions/ExpressionParser";
-import { ExpressionParser } from "./Calculator";
+import { Calculator } from "./Calculator";
 
 let isNumeric = x => {
     return (x >= "0" && x <= "9") || x == "." || x == "e";
