@@ -9,7 +9,7 @@ class ExpressionEvaluator {
         // First we need to process parentheses recursively
         for (let i = 0; i < statement.length; i++) {
             if (Array.isArray(statement[i])) {
-                statement[i] = this.evaluateStatement(statement[i]);
+                statement[i] = this.Evaluate(statement[i]);
             }
         }
 
@@ -22,7 +22,7 @@ class ExpressionEvaluator {
                     operation: statement[i]
                 });
             } else if (statement[i] instanceof MathFunction) {
-                MathFunction.innerExpression = this.EvaluateStatement(MathFunction.innerExpression);
+                MathFunction.innerExpression = this.Evaluate(MathFunction.innerExpression);
                 statement[i] = MathFunction.Evaluate();
             }
         }
