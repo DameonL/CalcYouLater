@@ -15,7 +15,7 @@ class Calculator extends React.Component {
         this.#evaluator = props.evaluator;
     }
 
-    countOccurences(char, input = this.state.input) {
+    #countOccurences(char, input = this.state.input) {
         let count = 0;
 
         for (let i = 0; i < input.length; i++) {
@@ -27,7 +27,7 @@ class Calculator extends React.Component {
         return count;
     }
 
-    allClear = () => {
+    #allClear = () => {
         if (this.state.input.length > 1) {
             this.setState({
                 input: this.state.input.substring(0, this.state.input.length - 1)
@@ -39,7 +39,7 @@ class Calculator extends React.Component {
         }
     };
 
-    updateInput = (input) => {
+    #updateInput = (input) => {
         let formatted = this.#formatter.Format(this.state.input + input);
         document.getElementById("inputArea").innerText = formatted;
 
@@ -50,15 +50,10 @@ class Calculator extends React.Component {
         return true;
     };
 
-    parseInput = () => {
-        let parsed = this.#parser.Parse(input);
-        return parsed;
-    };
-
-    evaluateInput = () => {
+    #evaluateInput = () => {
         let input = this.state.input;
-        let openCount = this.countOccurences("(");
-        let closedCount = this.countOccurences(")");
+        let openCount = this.#countOccurences("(");
+        let closedCount = this.#countOccurences(")");
         while (openCount > closedCount) {
             input += ")";
             closedCount++;
@@ -98,7 +93,7 @@ class Calculator extends React.Component {
                 input: text,
             });
 
-            event.target.innerText = this.evaluateInput();
+            event.target.innerText = this.#evaluateInput();
             range.setStart(event.target.firstChild, event.target.innerText.length);
             return;
 
@@ -121,8 +116,8 @@ class Calculator extends React.Component {
     }
 
     render() {
-        let openCount = this.countOccurences("(");
-        let closedCount = this.countOccurences(")");
+        let openCount = this.#countOccurences("(");
+        let closedCount = this.#countOccurences(")");
 
         return (
             <div>
@@ -149,61 +144,61 @@ class Calculator extends React.Component {
                         </span>
                     </div>
 
-                    <ButtonSection inputHandler={(event) => this.inputHandler(event)} buttons={
+                    <ButtonSection buttons={
                         <div className="gridContainer" id="topButtonGridContainer">
-                            <button onClick={this.inputHandler("Rad(")}>Rad</button>
-                            <button onClick={this.inputHandler("Deg(")}>Deg</button>
-                            <button onClick={this.inputHandler("!")}>x!</button>
+                            <button onClick={() => this.#updateInput("Rad(")}>Rad</button>
+                            <button onClick={() => this.#updateInput("Deg(")}>Deg</button>
+                            <button onClick={() => this.#updateInput("!")}>x!</button>
                             {["(", ")", "%"].map((x) => (
-                                <button className="numberButton" key={x} onClick={this.inputHandler(x)}>
+                                <button className="numberButton" key={x} onClick={this.#updateInput(x)}>
                                     {x}
                                 </button>
                             ))}
-                            <button onClick={this.props.clearHandler}>
-                                {this.props.currentInput.length == 1 ? "AC" : "CE"}
+                            <button onClick={() => this.#allClear}>
+                                {this.state.input.length == 1 ? "AC" : "CE"}
                             </button>
                         </div>
                     } />
 
-                    <ButtonSection inputHandler={(event) => this.inputHandler(event)} buttons={
+                    <ButtonSection buttons={
                         <div className="gridContainer" id="leftButtonGridContainer">
                             <button>Inv</button>
-                            <button onClick={this.inputHandler("sin(")}>sin</button>
-                            <button onClick={this.inputHandler("ln(")}>ln</button>
+                            <button onClick={() => this.#updateInput("sin(")}>sin</button>
+                            <button onClick={() => this.#updateInput("ln(")}>ln</button>
 
-                            <button onClick={this.inputHandler("π")}>π</button>
-                            <button onClick={this.inputHandler("cos(")}>cos</button>
-                            <button onClick={this.inputHandler("log(")}>log</button>
+                            <button onClick={() => this.#updateInput("π")}>π</button>
+                            <button onClick={() => this.#updateInput("cos(")}>cos</button>
+                            <button onClick={() => this.#updateInput("log(")}>log</button>
 
                             <button>e</button>
-                            <button onClick={this.inputHandler("tan(")}>tan</button>
-                            <button onClick={this.inputHandler("√")}>√</button>
+                            <button onClick={() => this.#updateInput("tan(")}>tan</button>
+                            <button onClick={() => this.#updateInput("√")}>√</button>
 
-                            <button onClick={this.inputHandler("Ans")}>Ans</button>
-                            <button onClick={this.inputHandler("e")}>EXP</button>
-                            <button onClick={this.inputHandler("^")}>
+                            <button onClick={() => this.#updateInput("Ans")}>Ans</button>
+                            <button onClick={() => this.#updateInput("e")}>EXP</button>
+                            <button onClick={() => this.#updateInput("^")}>
                                 X<sup>y</sup>
                             </button>
                         </div>
                     } />
 
-                    <ButtonSection inputHandler={(event) => this.inputHandler(event)} buttons={
+                    <ButtonSection buttons={
                         <div className="gridContainer" id="numberButtonGridContainer">
                             {[7, 8, 9, 4, 5, 6, 1, 2, 3, 0, "."].map((x) => (
-                                <button className="numberButton" key={x} onClick={this.inputHandler(x)}>
+                                <button className="numberButton" key={x} onClick={() => this.#updateInput(x)}>
                                     {x}
                                 </button>
                             ))}
-                            <button onClick={this.props.equalsHandler}>=</button>
+                            <button onClick={() => this.#evaluateInput()}>=</button>
                         </div>
                     } />
 
-                    <ButtonSection inputHandler={(event) => this.inputHandler(event)} buttons={
+                    <ButtonSection buttons={
                         <div className="gridContainer" id="rightButtonGridContainer">
-                            <button onClick={this.inputHandler("÷")}>÷</button>
-                            <button onClick={this.inputHandler("×")}>×</button>
-                            <button onClick={this.inputHandler("-")}>-</button>
-                            <button onClick={this.inputHandler("+")}>+</button>
+                            <button onClick={() => this.#updateInput("÷")}>÷</button>
+                            <button onClick={() => this.#updateInput("×")}>×</button>
+                            <button onClick={() => this.#updateInput("-")}>-</button>
+                            <button onClick={() => this.#updateInput("+")}>+</button>
                         </div>
                     } />
                 </div>
