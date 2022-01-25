@@ -1,4 +1,4 @@
-class MathFunction {
+export class MathFunction {
     callback = null;
     innerExpression = null;
 

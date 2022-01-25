@@ -13,12 +13,6 @@
     <!-- Don't use this in production: -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <script type="text/babel" src="Calculator.js"></script>
-    <script type="text/babel" src="Expressions/ExpressionEvaluator.js"></script>
-    <script type="text/babel" src="Expressions/ExpressionFormatter.js"></script>
-    <script type="text/babel" src="Expressions/ExpressionParser.js"></script>
-    <script type="text/babel" src="Expressions/MathFunction.js"></script>
-
 </head>
 
 <body translate="no">
@@ -26,18 +20,7 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root">
         <div>
-            <script type="text/babel">
-                let isNumeric = (x) => {
-                    return (x >= "0" && x <= "9") || x == "." || x == "e";
-                }
-
-                let operators = ["^","×","÷","+","-"]
-
-                let parser = new ExpressionParser(isNumeric);
-                let formatter = new ExpressionFormatter(isNumeric, operators);
-                let evaluator = new ExpressionEvaluator(parser.MathOperators);
-                ReactDOM.render(<Calculator parser={parser} formatter={formatter} evaluator={evaluator} />, document.getElementById("root"));
-            </script>
+            <script type="text/babel" src="index.js"></script>
         </div>
     </div>
 

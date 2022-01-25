@@ -1,4 +1,4 @@
-class ExpressionFormatter {
+export class ExpressionFormatter {
     #isNumeric = null;
     #operators = [];
 

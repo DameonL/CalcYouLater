@@ -1,4 +1,4 @@
-class ExpressionParser {
+export class ExpressionParser {
     #parsedExpression = null;
     #isNumeric = null;
 

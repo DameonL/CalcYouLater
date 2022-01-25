@@ -1,4 +1,6 @@
-class Calculator extends React.Component {
+import { ButtonSection } from "./ButtonSection";
+
+export class Calculator extends React.Component {
     #parser = null;
     #formatter = null;
     #evaluator = null;
@@ -79,6 +81,47 @@ class Calculator extends React.Component {
         return output;
     };
 
+    #inputKeyUp(event) {
+        event.preventDefault();
+        var sel = window.getSelection();
+        var range = sel.getRangeAt(0);
+        let selStart = range.startOffset;
+        let selEnd = range.endOffset;
+        e.target.innerHTML = event.target.innerHTML.replace("<br>", "");
+        let text = event.target.innerText;
+        text = text.replace("Ans", this.state.history[this.state.history.length - 1][1]);
+
+        if (text === undefined) {
+            text = "";
+        }
+
+        if (event.key === "Enter") {
+            this.setState({
+                input: text,
+            });
+
+            event.target.innerText = this.evaluateInput();
+            range.setStart(event.target.firstChild, event.target.innerText.length);
+            return;
+
+        } else if (event.key === "Backspace" || event.key === "Delete") {
+            if (text.length == 0) {
+                this.setState({ input: "0" });
+                event.target.innerText = "0";
+                range.setStart(event.target.firstChild, event.target.innerText.length);
+                return;
+            }
+        }
+
+        let formatted = this.#formatter.Format(text);
+        let difference = text.length - formatted.length;
+        this.setState({ input: formatted });
+        event.target.innerText = formatted;
+
+        if (selStart - difference > 0)
+            range.setStart(e.target.firstChild, selStart - difference);
+    }
+
     render() {
         let openCount = this.countOccurences("(");
         let closedCount = this.countOccurences(")");
@@ -93,52 +136,13 @@ class Calculator extends React.Component {
                             </div>
                         ))}
                     </div>
-                    <div
-                        id="inputWindow"
-                        onClick={() => document.getElementById("inputArea").focus()}
+                    <div id="inputWindow" onClick={() => document.getElementById("inputArea").focus()}
                     >
                         <span type="text"
                             id="inputArea"
                             contentEditable="true"
                             suppressContentEditableWarning="true"
-                            onKeyUp={(e) => {
-                                e.preventDefault();
-                                var sel = window.getSelection();
-                                var range = sel.getRangeAt(0);
-                                let selStart = range.startOffset;
-                                let selEnd = range.endOffset;
-                                e.target.innerHTML = e.target.innerHTML.replace("<br>", "");
-                                let text = e.target.innerText;
-                                text = text.replace("Ans", this.state.history[this.state.history.length - 1][1]);
-
-                                if (text === undefined) {
-                                    text = "";
-                                }
-
-                                if (e.key === "Enter") {
-                                    this.setState({
-                                        input: text,
-                                    });
-
-                                    e.target.innerText = this.evaluateInput();
-                                    range.setStart(e.target.firstChild, e.target.innerText.length);
-                                    return;
-                                } else if (e.key === "Backspace" || e.key === "Delete") {
-                                    if (text.length == 0) {
-                                        this.setState({ input: "0" });
-                                        e.target.innerText = "0";
-                                        range.setStart(e.target.firstChild, e.target.innerText.length);
-                                        return;
-                                    }
-                                }
-
-                                let formatted = this.#formatter.Format(text);
-                                let difference = text.length - formatted.length;
-                                this.setState({ input: formatted });
-                                e.target.innerText = formatted;
-                                if (selStart - difference > 0)
-                                    range.setStart(e.target.firstChild, selStart - difference);
-                            }}
+                            onKeyUp={(event) => this.#inputKeyUp(event)}
                         >
                             0
                         </span>
@@ -147,109 +151,64 @@ class Calculator extends React.Component {
                         </span>
                     </div>
 
-                    <TopButtons
-                        clearHandler={this.allClear}
-                        inputHandler={this.updateInput}
-                        currentInput={this.state.input}
-                    />
-                    <LeftButtons
-                        inputHandler={this.updateInput}
-                        currentInput={this.state.input}
-                    />
-                    <NumberButtons
-                        inputHandler={this.updateInput}
-                        equalsHandler={this.evaluateInput}
-                        currentInput={this.state.input}
-                    />
-                    <RightButtons
-                        inputHandler={this.updateInput}
-                        currentInput={this.state.input}
-                    />
+                    <ButtonSection inputHandler={(event) => this.inputHandler(event)} buttons={
+                        <div className="gridContainer" id="topButtonGridContainer">
+                            <button onClick={this.inputHandler("Rad(")}>Rad</button>
+                            <button onClick={this.inputHandler("Deg(")}>Deg</button>
+                            <button onClick={this.inputHandler("!")}>x!</button>
+                            {["(", ")", "%"].map((x) => (
+                                <button className="numberButton" key={x} onClick={this.inputHandler(x)}>
+                                    {x}
+                                </button>
+                            ))}
+                            <button onClick={this.props.clearHandler}>
+                                {this.props.currentInput.length == 1 ? "AC" : "CE"}
+                            </button>
+                        </div>
+                    } />
+
+                    <ButtonSection inputHandler={(event) => this.inputHandler(event)} buttons={
+                        <div className="gridContainer" id="leftButtonGridContainer">
+                            <button>Inv</button>
+                            <button onClick={this.inputHandler("sin(")}>sin</button>
+                            <button onClick={this.inputHandler("ln(")}>ln</button>
+            
+                            <button onClick={this.inputHandler("π")}>π</button>
+                            <button onClick={this.inputHandler("cos(")}>cos</button>
+                            <button onClick={this.inputHandler("log(")}>log</button>
+            
+                            <button>e</button>
+                            <button onClick={this.inputHandler("tan(")}>tan</button>
+                            <button onClick={this.inputHandler("√")}>√</button>
+            
+                            <button onClick={this.inputHandler("Ans")}>Ans</button>
+                            <button onClick={this.inputHandler("e")}>EXP</button>
+                            <button onClick={this.inputHandler("^")}>
+                                X<sup>y</sup>
+                            </button>
+                            </div>
+                    } />
+
+                    <ButtonSection inputHandler={(event) => this.inputHandler(event)} buttons={
+                        <div className="gridContainer" id="numberButtonGridContainer">
+                            {[7, 8, 9, 4, 5, 6, 1, 2, 3, 0, "."].map((x) => (
+                                <button className="numberButton" key={x} onClick={this.inputHandler(x)}>
+                                    {x}
+                                </button>
+                            ))}
+                            <button onClick={this.props.equalsHandler}>=</button>
+                            </div>
+                    } />
+
+                    <ButtonSection inputHandler={(event) => this.inputHandler(event)} buttons={
+                        <div className="gridContainer" id="rightButtonGridContainer">
+                            <button onClick={this.inputHandler("÷")}>÷</button>
+                            <button onClick={this.inputHandler("×")}>×</button>
+                            <button onClick={this.inputHandler("-")}>-</button>
+                            <button onClick={this.inputHandler("+")}>+</button>
+                        </div>
+                    } />
                 </div>
-            </div>
-        );
-    }
-}
-
-class ButtonSection extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    inputHandler = (number) => () => {
-        this.props.inputHandler(number);
-    };
-}
-
-class TopButtons extends ButtonSection {
-    render() {
-        return (
-            <div className="gridContainer" id="topButtonGridContainer">
-                <button onClick={this.inputHandler("Rad(")}>Rad</button>
-                <button onClick={this.inputHandler("Deg(")}>Deg</button>
-                <button onClick={this.inputHandler("!")}>x!</button>
-                {["(", ")", "%"].map((x) => (
-                    <button className="numberButton" key={x} onClick={this.inputHandler(x)}>
-                        {x}
-                    </button>
-                ))}
-                <button onClick={this.props.clearHandler}>
-                    {this.props.currentInput.length == 1 ? "AC" : "CE"}
-                </button>
-            </div>
-        );
-    }
-}
-
-class LeftButtons extends ButtonSection {
-    render() {
-        return (
-            <div className="gridContainer" id="leftButtonGridContainer">
-                <button>Inv</button>
-                <button onClick={this.inputHandler("sin(")}>sin</button>
-                <button onClick={this.inputHandler("ln(")}>ln</button>
-
-                <button onClick={this.inputHandler("π")}>π</button>
-                <button onClick={this.inputHandler("cos(")}>cos</button>
-                <button onClick={this.inputHandler("log(")}>log</button>
-
-                <button>e</button>
-                <button onClick={this.inputHandler("tan(")}>tan</button>
-                <button onClick={this.inputHandler("√")}>√</button>
-
-                <button onClick={this.inputHandler("Ans")}>Ans</button>
-                <button onClick={this.inputHandler("e")}>EXP</button>
-                <button onClick={this.inputHandler("^")}>
-                    X<sup>y</sup>
-                </button>
-            </div>
-        );
-    }
-}
-
-class NumberButtons extends ButtonSection {
-    render() {
-        return (
-            <div className="gridContainer" id="numberButtonGridContainer">
-                {[7, 8, 9, 4, 5, 6, 1, 2, 3, 0, "."].map((x) => (
-                    <button className="numberButton" key={x} onClick={this.inputHandler(x)}>
-                        {x}
-                    </button>
-                ))}
-                <button onClick={this.props.equalsHandler}>=</button>
-            </div>
-        );
-    }
-}
-
-class RightButtons extends ButtonSection {
-    render() {
-        return (
-            <div className="gridContainer" id="rightButtonGridContainer">
-                <button onClick={this.inputHandler("÷")}>÷</button>
-                <button onClick={this.inputHandler("×")}>×</button>
-                <button onClick={this.inputHandler("-")}>-</button>
-                <button onClick={this.inputHandler("+")}>+</button>
             </div>
         );
     }
