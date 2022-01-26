@@ -28,7 +28,7 @@ class Calculator extends React.Component {
         return count;
     }
 
-    #allClear = () => {
+    #allClear() {
         if (this.state.input.length > 1) {
             this.setState({
                 input: this.state.input.substring(0, this.state.input.length - 1)
@@ -40,7 +40,7 @@ class Calculator extends React.Component {
         }
     };
 
-    #updateInput = (input) => {
+    #updateInput(input) {
         let formatted = this.#formatter.Format(this.state.input + input);
         document.getElementById("inputArea").innerText = formatted;
 
@@ -51,7 +51,7 @@ class Calculator extends React.Component {
         return true;
     };
 
-    #evaluateInput = () => {
+    #evaluateInput() {
         let input = this.state.input;
         let openCount = this.#countOccurences("(");
         let closedCount = this.#countOccurences(")");
@@ -121,16 +121,6 @@ class Calculator extends React.Component {
         let openCount = this.#countOccurences("(");
         let closedCount = this.#countOccurences(")");
 
-        let topButtons = [
-            { text: "Rad", onClick: () => this.#updateInput("Rad(") },
-            { text: "Deg", onClick: () => this.#updateInput("Deg(") },
-            { text: "x!", onClick: () => this.#updateInput("!") },
-            { text: "(", },
-            { text: ")", },
-            { text: "%", },
-            { text: (this.state.input.length == 1) ? "AC" : "CE", onClick: () => this.#allClear},
-        ]
-
         return (
             <div>
                 <div className="gridContainer" id="calcGridContainer">
@@ -155,68 +145,13 @@ class Calculator extends React.Component {
                             {openCount > closedCount ? ")" : ""}
                         </span>
                     </div>
-
-                    <ButtonSection buttons={
-                        <div className="gridContainer" id="topButtonGridContainer">
-                            <button onClick={() => this.#updateInput("Rad(")}>Rad</button>
-                            <button onClick={() => this.#updateInput("Deg(")}>Deg</button>
-                            <button onClick={() => this.#updateInput("!")}></button>
-                            {["(", ")", "%"].map((x) => (
-                                <button className="numberButton" key={x} onClick={() => this.#updateInput(x)}>
-                                    {x}
-                                </button>
-                            ))}
-                            <button onClick={() => this.#allClear}>
-                                {this.state.input.length == 1 ? "AC" : "CE"}
-                            </button>
-                        </div>
-                    } />
-
-                    <ButtonSection buttons={
-                        <div className="gridContainer" id="leftButtonGridContainer">
-                            <button onClick={() => { this.setState({ inverse: !this.state.inverse}); console.log(this.state.inverse); }}>Inv</button>
-                            <button onClick={() => this.#updateInput("sin(")}>sin</button>
-                            <button onClick={() => this.#updateInput("ln(")}>ln</button>
-
-                            <button onClick={() => this.#updateInput("π")}>π</button>
-                            <button onClick={() => this.#updateInput("cos(")}>cos</button>
-                            <button onClick={() => this.#updateInput("log(")}>log</button>
-
-                            <button>e</button>
-                            <button onClick={() => this.#updateInput("tan(")}>tan</button>
-                            <button onClick={() => this.#updateInput("√")}>√</button>
-
-                            {
-                                (this.state.inverse == false) 
-                                ? () => <button onClick={() => this.#updateInput("Ans")}>Ans</button>
-                                : () => <button onClick={() => this.#updateInput("Rnd")}>Rnd</button>
-                            }
-                            <button onClick={() => this.#updateInput("e")}>EXP</button>
-                            <button onClick={() => this.#updateInput("^")}>
-                                X<sup>y</sup>
-                            </button>
-                        </div>
-                    } />
-
-                    <ButtonSection buttons={
-                        <div className="gridContainer" id="numberButtonGridContainer">
-                            {[7, 8, 9, 4, 5, 6, 1, 2, 3, 0, "."].map((x) => (
-                                <button className="numberButton" key={x} onClick={() => this.#updateInput(x)}>
-                                    {x}
-                                </button>
-                            ))}
-                            <button onClick={() => this.#evaluateInput()}>=</button>
-                        </div>
-                    } />
-
-                    <ButtonSection buttons={
-                        <div className="gridContainer" id="rightButtonGridContainer">
-                            <button onClick={() => this.#updateInput("÷")}>÷</button>
-                            <button onClick={() => this.#updateInput("×")}>×</button>
-                            <button onClick={() => this.#updateInput("-")}>-</button>
-                            <button onClick={() => this.#updateInput("+")}>+</button>
-                        </div>
-                    } />
+                    <ButtonSection
+                        inputHandler={(input) => this.#updateInput(input)}
+                        inverse={this.state.inverse}
+                        inverseHandler={() => this.setState({ inverse: !this.state.inverse })}
+                        clearHandler={() => this.#allClear()}
+                        evaluateHandler={() => this.#evaluateInput()}
+                    />
                 </div>
             </div>
         );
