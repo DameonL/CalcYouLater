@@ -26,7 +26,7 @@ class ButtonSection extends React.Component {
                                 {x}
                             </button>
                         ))}
-                        <button onClick={() => this.#allClear}>
+                        <button onClick={() => this.#clearHandler()}>
                             {this.state.input.length == 1 ? "AC" : "CE"}
                         </button>
                     </div>
