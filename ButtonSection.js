@@ -44,7 +44,7 @@ class ButtonSection extends React.Component {
                         <button onClick={() => this.updateInput("√")}>√</button>
 
                         {
-                            (this.state.inverse == false)
+                            (this.inverse == false)
                                 ? () => <button onClick={() => this.updateInput("Ans")}>Ans</button>
                                 : () => <button onClick={() => this.updateInput("Rnd")}>Rnd</button>
                         }
