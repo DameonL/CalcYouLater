@@ -7,6 +7,9 @@ class Calculator extends React.Component {
             history: [[0, 0]],
             inverse: false,
         };
+        document.addEventListener("keypress", (source, event) => {
+            document.getElementById("inputArea").focus();
+        });
     }
 
     #countOccurences(char, input = this.state.input) {
