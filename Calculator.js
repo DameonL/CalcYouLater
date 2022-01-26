@@ -7,8 +7,15 @@ class Calculator extends React.Component {
             history: [[0, 0]],
             inverse: false,
         };
+
         document.addEventListener("keypress", (source, event) => {
-            document.getElementById("inputArea").focus();
+            let inputArea = document.getElementById("inputArea");
+            if (document.activeElement != inputArea) {
+                inputArea.focus();
+                setTimeout(() => {
+                    inputArea.setSelectionRange(inputArea.value.length, inputArea.value.length);
+                });
+            }
         });
     }
 

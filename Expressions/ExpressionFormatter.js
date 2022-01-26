@@ -1,6 +1,8 @@
 class ExpressionFormatter {
     #isNumeric = null;
     #operators = [];
+    #replaceChars = {"/" : "÷", "*" : "×"};
+    #symbols = ["√", "%"]
 
     constructor(numericFunction, operators) {
         this.#isNumeric = numericFunction;
@@ -17,8 +19,6 @@ class ExpressionFormatter {
 
     // Need to clean this up and determine generalized rules
     Format(input) {
-        let replaceChars = {"/" : "÷", "*" : "×"};
-        let symbols = ["√", "%"]
         let formatted = "";
         for (let i = 0; i < input.length; i++) {
             let lastChar = input[i - 1];
