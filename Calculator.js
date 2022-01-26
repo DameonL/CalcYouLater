@@ -178,12 +178,10 @@ class Calculator extends React.Component {
 
                             {
                                 () => {
-                                    if (this.state.inverse == false) {
-                                        return <button onClick={() => this.#updateInput("Ans")}>Ans</button>
-                                    } else {
-                                        return <button onClick={() => this.#updateInput("Rnd")}>Rnd</button>
-                                    }
-                                }
+                                    (this.state.inverse == false) 
+                                    ? <button onClick={() => this.#updateInput("Ans")}>Ans</button> 
+                                    : <button onClick={() => this.#updateInput("Rnd")}>Rnd</button>
+                                } 
                             }
                             <button onClick={() => this.#updateInput("e")}>EXP</button>
                             <button onClick={() => this.#updateInput("^")}>
