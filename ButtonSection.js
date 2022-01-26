@@ -27,7 +27,7 @@ class ButtonSection extends React.Component {
                             </button>
                         ))}
                         <button onClick={() => this.clearHandler()}>
-                            {this.state.input.length == 1 ? "AC" : "CE"}
+                            AC
                         </button>
                     </div>
                     <div className="gridContainer" id="leftButtonGridContainer">
