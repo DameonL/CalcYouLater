@@ -119,7 +119,7 @@ class Calculator extends React.Component {
                 <div className="gridContainer" id="calcGridContainer">
                     <div id="history">
                         {this.state.history.map((x) => (
-                            <div key={x[0]}>
+                            <div key="historyState{x}">
                                 {x[0]} = {x[1]}
                             </div>
                         ))}
