@@ -59,7 +59,7 @@ class ButtonSection extends React.Component {
                                 {x}
                             </button>
                         ))}
-                        <button onClick={() => this.#evaluateInput()}>=</button>
+                        <button onClick={() => this.#evaluateHandler()}>=</button>
                     </div>
                     <div className="gridContainer" id="rightButtonGridContainer">
                         <button onClick={() => this.#updateInput("÷")}>÷</button>
