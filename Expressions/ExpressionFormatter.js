@@ -47,9 +47,6 @@ class ExpressionFormatter {
             )
                 continue;
     
-            if (currentChar == "*") currentChar = "×";
-            else if (currentChar == "/") currentChar = "÷";
-    
             if (currentChar == "e") {
                 if (currentNumber.includes(".") && lastChar != ".")
                     continue
@@ -66,17 +63,9 @@ class ExpressionFormatter {
                 i++;
                 continue;
             }
-    
-            if (currentChar == "π" && this.#isNumeric(nextChar)) {
-                currentChar = currentChar + "×";
-            }
 
-            if ((nextChar == "(" || nextChar == "π") && this.#isNumeric(currentChar)) {
+            if (this.#isNumeric(currentChar) && !this.#isNumeric(nextChar)) {
                 currentChar = currentChar + "×";
-            }
-    
-            if ((lastChar == ")") && (!this.#operators.includes(currentChar))) {
-                currentChar = "×" + currentChar;
             }
     
             formatted += currentChar;
