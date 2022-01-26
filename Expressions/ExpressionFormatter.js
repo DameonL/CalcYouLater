@@ -17,12 +17,15 @@ class ExpressionFormatter {
 
     // Need to clean this up and determine generalized rules
     Format(input) {
+        let replaceChars = [{"/" : "÷"}, {"*" : "×"}];
+        let symbols = ["√", "%"]
         let formatted = "";
         for (let i = 0; i < input.length; i++) {
             let lastChar = input[i - 1];
             let currentChar = input[i];
             let nextChar = input[i + 1];
             let currentNumber = this.#GetLastNumber(input, i);
+            if (currentChar in replaceChars) { currentChar = replaceChars[currentChar]; }
     
             if (currentChar == "." && lastChar == ".") continue;
     
@@ -66,7 +69,8 @@ class ExpressionFormatter {
 
             if (nextChar && this.#isNumeric(currentChar) && (
                     !this.#isNumeric(nextChar) &&
-                    !this.#operators.includes(nextChar)
+                    !this.#operators.includes(nextChar) &&
+                    !this.symbols.contains(nextChar)
                 )
             ) {
                 currentChar = currentChar + "×";
