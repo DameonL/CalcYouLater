@@ -4,6 +4,7 @@ class ExpressionFormatter {
 
     constructor(numericFunction, operators) {
         this.#isNumeric = numericFunction;
+        this.#operators = operators;
     }
 
     #GetLastNumber = (input, startPosition) => {
@@ -14,6 +15,7 @@ class ExpressionFormatter {
         return lastNumber;
     };
 
+    // Need to clean this up and determine generalized rules
     Format(input) {
         let formatted = "";
         for (let i = 0; i < input.length; i++) {
@@ -66,17 +68,14 @@ class ExpressionFormatter {
             }
     
             if (currentChar == "π" && this.#isNumeric(nextChar)) {
-                currentChar = "×" + currentChar;
+                currentChar = currentChar + "×";
             }
-    
+
             if ((nextChar == "(" || nextChar == "π") && this.#isNumeric(currentChar)) {
                 currentChar = currentChar + "×";
             }
     
-            if (
-                lastChar == ")" &&
-                (this.#isNumeric(currentChar) || currentChar == "(")
-            ) {
+            if ((lastChar == ")") && (!this.#operators.includes(currentChar))) {
                 currentChar = "×" + currentChar;
             }
     

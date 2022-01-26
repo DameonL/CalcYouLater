@@ -6,14 +6,12 @@ class ExpressionEvaluator {
     }
 
     Evaluate(statement) {
-        // First we need to process parentheses recursively
         for (let i = 0; i < statement.length; i++) {
             if (Array.isArray(statement[i])) {
                 statement[i] = this.Evaluate(statement[i]);
             }
         }
 
-        // Get all the operator indices
         let operators = [];
         for (let i = 0; i < statement.length; i++) {
             if (statement[i] instanceof Function) {

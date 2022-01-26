@@ -119,13 +119,12 @@ class ExpressionParser {
                 for (; levels > 0; i++) {
                     if (input[i] == "(") levels++;
                     else if (input[i] == ")") levels--;
+                    if (levels == 0) break;
 
-                    if (levels > 0)
-                        innerExpression += input[i];
+                    innerExpression += input[i];
                 }
 
                 let parsedInner = this.Parse(innerExpression);
-//                let evaluatedInner = this.evaluateStatement(parsedInner);
                 output.push(new MathFunction(this.#mathFunctions[functionName], parsedInner));
                 continue;
             }

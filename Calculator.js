@@ -1,8 +1,4 @@
 class Calculator extends React.Component {
-    #parser = null;
-    #formatter = null;
-    #evaluator = null;
-
     constructor(props) {
         super(props);
         this.state = {
@@ -11,9 +7,6 @@ class Calculator extends React.Component {
             history: [[0, 0]],
             inverse: false,
         };
-        this.#parser = props.parser;
-        this.#formatter = props.formatter;
-        this.#evaluator = props.evaluator;
     }
 
     #countOccurences(char, input = this.state.input) {
@@ -41,7 +34,7 @@ class Calculator extends React.Component {
     };
 
     #updateInput(input) {
-        let formatted = this.#formatter.Format(this.state.input + input);
+        let formatted = this.props.formatter.Format(this.state.input + input);
         document.getElementById("inputArea").innerText = formatted;
 
         this.setState({
@@ -60,7 +53,9 @@ class Calculator extends React.Component {
             closedCount++;
         }
 
-        let output = this.#evaluator.Evaluate(this.#parser.Parse(input));
+        input = input.replace("Ans", this.state.history[this.state.history.length - 1][1]);
+        input = input.replace("Rnd", Math.random());
+        let output = this.props.evaluator.Evaluate(this.props.parser.Parse(input));
         output = output.toString();
         this.setState({
             history: [...this.state.history, [input, output]],
@@ -83,8 +78,6 @@ class Calculator extends React.Component {
         let selEnd = range.endOffset;
         event.target.innerHTML = event.target.innerHTML.replace("<br>", "");
         let text = event.target.innerText;
-        text = text.replace("Ans", this.state.history[this.state.history.length - 1][1]);
-        text = text.replace("Rnd", Math.random());
 
         if (text === undefined) {
             text = "";
@@ -108,7 +101,7 @@ class Calculator extends React.Component {
             }
         }
 
-        let formatted = this.#formatter.Format(text);
+        let formatted = this.props.formatter.Format(text);
         let difference = text.length - formatted.length;
         this.setState({ input: formatted });
         event.target.innerText = formatted;
@@ -148,7 +141,7 @@ class Calculator extends React.Component {
                     <ButtonSection
                         inputHandler={(input) => this.#updateInput(input)}
                         inverse={this.state.inverse}
-                        inverseHandler={() => this.setState({ inverse: !this.state.inverse })}
+                        inverseHandler={() => { this.setState({ inverse: !this.state.inverse } )}}
                         clearHandler={() => this.#allClear()}
                         evaluateHandler={() => this.#evaluateInput()}
                     />
