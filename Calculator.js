@@ -121,6 +121,16 @@ class Calculator extends React.Component {
         let openCount = this.#countOccurences("(");
         let closedCount = this.#countOccurences(")");
 
+        let topButtons = [
+            { text: "Rad", onClick: () => this.#updateInput("Rad(") },
+            { text: "Deg", onClick: () => this.#updateInput("Deg(") },
+            { text: "x!", onClick: () => this.#updateInput("!") },
+            { text: "(", },
+            { text: ")", },
+            { text: "%", },
+            { text: (this.state.input.length == 1) ? "AC" : "CE", onClick: () => this.#allClear},
+        ]
+
         return (
             <div>
                 <div className="gridContainer" id="calcGridContainer">
@@ -150,7 +160,7 @@ class Calculator extends React.Component {
                         <div className="gridContainer" id="topButtonGridContainer">
                             <button onClick={() => this.#updateInput("Rad(")}>Rad</button>
                             <button onClick={() => this.#updateInput("Deg(")}>Deg</button>
-                            <button onClick={() => this.#updateInput("!")}>x!</button>
+                            <button onClick={() => this.#updateInput("!")}></button>
                             {["(", ")", "%"].map((x) => (
                                 <button className="numberButton" key={x} onClick={() => this.#updateInput(x)}>
                                     {x}
@@ -177,11 +187,9 @@ class Calculator extends React.Component {
                             <button onClick={() => this.#updateInput("√")}>√</button>
 
                             {
-                                () => {
-                                    (this.state.inverse == false) 
-                                    ? <button onClick={() => this.#updateInput("Ans")}>Ans</button> 
-                                    : <button onClick={() => this.#updateInput("Rnd")}>Rnd</button>
-                                } 
+                                (this.state.inverse == false) 
+                                ? () => { return (<button onClick={() => this.#updateInput("Ans")}>Ans</button>) }
+                                : () => { return (<button onClick={() => this.#updateInput("Rnd")}>Rnd</button>) }
                             }
                             <button onClick={() => this.#updateInput("e")}>EXP</button>
                             <button onClick={() => this.#updateInput("^")}>
