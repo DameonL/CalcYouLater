@@ -1,6 +1,7 @@
 {
-    "name":"",
-    "short_name":"",
+    "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+    "name":"Calc You Later",
+    "short_name":"Calc You Later",
     "icons":
     [
         {
@@ -15,4 +16,5 @@
     ],
     "theme_color":"#ffffff",
     "background_color":"#ffffff",
-    "display":"standalone"}
+    "display":"standalone"
+}
