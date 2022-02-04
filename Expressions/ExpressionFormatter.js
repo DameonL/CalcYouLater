@@ -61,7 +61,7 @@ class ExpressionFormatter {
             if (nextChar && this.#isNumeric(currentChar) && (
                     !this.#isNumeric(nextChar) &&
                     !this.#operators.includes(nextChar) &&
-                    !this.#symbols.contains(nextChar)
+                    !this.#symbols.includes(nextChar)
                 )
             ) {
                 currentChar = currentChar + "×";
