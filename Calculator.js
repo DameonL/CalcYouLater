@@ -34,7 +34,7 @@ class Calculator extends React.Component {
     #allClear() {
         if (this.state.input.length > 1) {
             this.setState({
-                input: this.state.input.substring(0, this.state.input.length - 1)
+                input: this.state.input.substring(0, this.state.input.length - 2)
             });
         } else {
             this.setState({

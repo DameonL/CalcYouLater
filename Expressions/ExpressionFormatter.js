@@ -32,7 +32,7 @@ class ExpressionFormatter {
                 formatted += "0" + currentChar;
                 continue;
             }
-    
+
             if (
                 (!this.#isNumeric(lastChar)) &&
                 (currentChar == "0") &&
@@ -43,7 +43,7 @@ class ExpressionFormatter {
             if (lastChar == "√" && (!this.#isNumeric(currentChar) && currentChar != "(")) continue;
     
             if (currentChar == "%" && (!this.#isNumeric(lastChar) && currentChar != "(")) continue;
-    
+
             if (currentChar == "(" && nextChar == ")") {
                 i++;
                 continue;
@@ -53,6 +53,7 @@ class ExpressionFormatter {
                     !this.#isNumeric(nextChar) &&
                     !this.#operators.includes(nextChar) &&
                     !this.#symbols.includes(nextChar) &&
+                    (nextChar.toLowerCase() < "a" || nextChar.toLowerCase() > "z") &&
                     nextChar != ")"
                 )
             ) {
