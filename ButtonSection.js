@@ -46,7 +46,7 @@ class ButtonSection extends React.Component {
                             : <button onClick={() => this.props.inputHandler("10^")}>10<sup>x</sup></button>
                     }
 
-                    <button>e</button>
+                    <button onClick={() => this.props.inputHandler("e")}>e</button>
 
                     {
                         (!this.props.inverse)

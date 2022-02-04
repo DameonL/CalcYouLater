@@ -84,6 +84,16 @@ class ExpressionParser {
         for (let i = 0; i < input.length; i++) {
             if (i > 0) lastChar = input[i - 1];
 
+            if (input[i] == "π") {
+                output.push(Math.PI);
+                continue;
+            }
+
+            if (input[i] == "e") {
+                output.push(Math.E);
+                continue;
+            }
+
             let number = "";
             if ((input[i] == "-") && (lastChar == "" || lastChar in this.#operatorFunctions)) {
                 number = "-";
@@ -153,12 +163,6 @@ class ExpressionParser {
                 continue;
             }
 
-            if (input[i] == "π") {
-                output.push(Math.PI);
-            }
-            if (input[i] == "e") {
-                output.push(Math.E);
-            }
         }
 
         return output;
