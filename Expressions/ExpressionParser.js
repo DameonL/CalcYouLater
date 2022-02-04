@@ -12,7 +12,9 @@ class ExpressionParser {
         "arcsin": Math.asin,
         "sin": Math.sin,
         "cos": Math.cos,
+        "arccos": Math.acos,
         "tan": Math.tan,
+        "arctan": Math.atan,
         "ln": Math.log,
         "log": Math.log10,
     }
@@ -153,6 +155,9 @@ class ExpressionParser {
 
             if (input[i] == "π") {
                 output.push(Math.PI);
+            }
+            if (input[i] == "e") {
+                output.push(Math.E);
             }
         }
 

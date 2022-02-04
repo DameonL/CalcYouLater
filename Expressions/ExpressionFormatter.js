@@ -48,15 +48,7 @@ class ExpressionFormatter {
                 lastChar != ")"
             )
                 continue;
-    
-            if (currentChar == "e") {
-                if (currentNumber.includes(".") && lastChar != ".")
-                    continue
-    
-                if (lastChar != ".") formatted += ".";
-            }
-    
-    
+        
             if (lastChar == "√" && (!this.#isNumeric(currentChar) && currentChar != "(")) continue;
     
             if (currentChar == "%" && (!this.#isNumeric(lastChar) && currentChar != "(")) continue;

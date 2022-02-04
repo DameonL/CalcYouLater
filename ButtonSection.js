@@ -23,17 +23,37 @@ class ButtonSection extends React.Component {
                     {
                         (!this.props.inverse)
                             ? <button onClick={() => this.props.inputHandler("sin(")}>sin</button>
-                            : <button onClick={() => this.props.inputHandler("asin(")}>sin<sup>-1</sup></button>
+                            : <button onClick={() => this.props.inputHandler("arcsin(")}>sin<sup>-1</sup></button>
                     }
                     
-                    <button onClick={() => this.props.inputHandler("ln(")}>ln</button>
+                    {
+                        (!this.props.inverse)
+                            ? <button onClick={() => this.props.inputHandler("ln(")}>ln</button>
+                            : <button onClick={() => this.props.inputHandler("e^")}>e<sup>x</sup></button>
+                    }
 
                     <button onClick={() => this.props.inputHandler("π")}>π</button>
-                    <button onClick={() => this.props.inputHandler("cos(")}>cos</button>
-                    <button onClick={() => this.props.inputHandler("log(")}>log</button>
+
+                    {
+                        (!this.props.inverse)
+                            ? <button onClick={() => this.props.inputHandler("cos(")}>cos</button>
+                            : <button onClick={() => this.props.inputHandler("arccos(")}>cos<sup>-1</sup></button>
+                    }
+
+                    {
+                        (!this.props.inverse)
+                            ? <button onClick={() => this.props.inputHandler("log(")}>log</button>
+                            : <button onClick={() => this.props.inputHandler("10^")}>10<sup>x</sup></button>
+                    }
 
                     <button>e</button>
-                    <button onClick={() => this.props.inputHandler("tan(")}>tan</button>
+
+                    {
+                        (!this.props.inverse)
+                            ? <button onClick={() => this.props.inputHandler("tan(")}>tan</button>
+                            : <button onClick={() => this.props.inputHandler("arctan(")}>tan<sup>-1</sup></button>
+                    }
+
                     <button onClick={() => this.props.inputHandler("√")}>√</button>
 
                     {
