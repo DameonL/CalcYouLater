@@ -40,15 +40,6 @@ class ExpressionFormatter {
             )
                 continue;
     
-            if (
-                this.#operators.includes(currentChar) &&
-                currentChar != "-" &&
-                !this.#isNumeric(lastChar) &&
-                lastChar != "" &&
-                lastChar != ")"
-            )
-                continue;
-        
             if (lastChar == "√" && (!this.#isNumeric(currentChar) && currentChar != "(")) continue;
     
             if (currentChar == "%" && (!this.#isNumeric(lastChar) && currentChar != "(")) continue;
