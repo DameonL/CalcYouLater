@@ -77,6 +77,10 @@ class ExpressionParser {
         return [...this.#mathOperators];
     }
 
+    /*  In some ways, it would be better to parse directly from our buttons into the expressions,
+    *   however, allowing text input followed by parsing allows the user to copy and paste expressions
+    *   into the calculator. We do our very best to process the input, rather than trying to limit the user.
+    */
     Parse(input) {
         let output = [];
         let lastChar = "";
