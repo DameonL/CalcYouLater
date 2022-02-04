@@ -21,7 +21,7 @@ class ExpressionParser {
 
     #symbolFunctions = {
         "%": (number) => {
-            return Number(number.replace("%", "")) * 0.01;
+            return Number(number.replace("%", "")) / 100;
         },
         "√": (number) => {
             return Math.sqrt(Number(number.replace("√", "")));
