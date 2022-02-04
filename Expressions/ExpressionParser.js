@@ -9,6 +9,7 @@ class ExpressionParser {
     #mathFunctions = {
         "Rad": (number) => (number * (Math.PI / 180)),
         "Deg": (number) => (number * (180 / Math.PI)),
+        "arcsin": Math.asin,
         "sin": Math.sin,
         "cos": Math.cos,
         "tan": Math.tan,

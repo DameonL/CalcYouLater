@@ -17,7 +17,6 @@ class ExpressionFormatter {
         return lastNumber;
     };
 
-    // Need to clean this up and determine generalized rules
     Format(input) {
         let formatted = "";
         for (let i = 0; i < input.length; i++) {
@@ -25,7 +24,7 @@ class ExpressionFormatter {
             let currentChar = input[i];
             let nextChar = input[i + 1];
             let currentNumber = this.#GetLastNumber(input, i);
-            if (currentChar in replaceChars) { currentChar = replaceChars[currentChar]; }
+            if (currentChar in this.#replaceChars) { currentChar = this.#replaceChars[currentChar]; }
     
             if (currentChar == "." && lastChar == ".") continue;
     

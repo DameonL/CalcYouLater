@@ -19,7 +19,13 @@ class ButtonSection extends React.Component {
                 </div>
                 <div className="gridContainer" id="leftButtonGridContainer">
                     <button onClick={() => this.props.inverseHandler()}>Inv</button>
-                    <button onClick={() => this.props.inputHandler("sin(")}>sin</button>
+
+                    {
+                        (!this.props.inverse)
+                            ? <button onClick={() => this.props.inputHandler("sin(")}>sin</button>
+                            : <button onClick={() => this.props.inputHandler("asin(")}>sin<sup>-1</sup></button>
+                    }
+                    
                     <button onClick={() => this.props.inputHandler("ln(")}>ln</button>
 
                     <button onClick={() => this.props.inputHandler("π")}>π</button>
