@@ -49,17 +49,6 @@ class ExpressionFormatter {
                 continue;
             }
 
-            if (nextChar && this.#isNumeric(currentChar) && (
-                    !this.#isNumeric(nextChar) &&
-                    !this.#operators.includes(nextChar) &&
-                    !this.#symbols.includes(nextChar) &&
-                    (nextChar.toLowerCase() < "a" || nextChar.toLowerCase() > "z") &&
-                    nextChar != ")"
-                )
-            ) {
-                currentChar = currentChar + "×";
-            }
-    
             formatted += currentChar;
         }
     
