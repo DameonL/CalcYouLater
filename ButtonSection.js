@@ -9,7 +9,7 @@ class ButtonSection extends React.Component {
                 <div className="gridContainer" id="topButtonGridContainer">
                     <button onClick={() => this.props.inputHandler("Rad(")}>Rad</button>
                     <button onClick={() => this.props.inputHandler("Deg(")}>Deg</button>
-                    <button onClick={() => this.props.inputHandler("!")}></button>
+                    <button onClick={() => this.props.inputHandler("!")}>!</button>
                     {["(", ")", "%"].map((x) => (
                         <button className="numberButton" key={x} onClick={() => this.props.inputHandler(x)}>
                             {x}
